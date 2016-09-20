@@ -1,0 +1,36 @@
+1
+00:00:02,500 --> 00:00:04,346
+Viki is good!
+
+2
+00:00:04,346 --> 00:00:5,249
+nice!
+
+3
+00:00:7,249 --> 00:00:13,606
+I like it
+
+4
+00:00:13,606 --> 00:00:16,244
+The Engineering Team at Viki works on developing and maintaining the backend behind viki.com - a global TV site powered by a volunteer community of avid fans.
+
+5
+00:00:16,244 --> 00:00:18,603
+Launched in December 2010, we have over 2 billion video streams and more than 400 million words translated.
+
+6
+00:00:18,603 --> 00:00:22,369
+We are not obsessed by any particular technology.
+
+7
+00:00:22,960 --> 00:00:24,760
+We believe cool technologies might not get the job done, the right technologies do.
+
+8
+00:00:26,680 --> 00:00:30,740
+We use Ruby, Node.js, Golang, AngularJS, EmberJS with PostgreSQL, Redis and RabbitMQ.
+
+9
+00:00:30,740 --> 00:00:34,195
+We make sure our code are highly decoupled through message queue infrastructure, service-oriented architectures and proper design patterns.
+

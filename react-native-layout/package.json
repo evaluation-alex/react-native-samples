@@ -1,0 +1,43 @@
+{
+  "name": "react-native-layout",
+  "version": "0.0.4",
+  "description": "Semantic JSX layout components for react-native",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint lib",
+    "test": "true",
+    "_test": "mocha --recursive",
+    "_coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --recursive"
+  },
+  "author": "Christoph Jerolimov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerolimov/react-native-layout.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jerolimov/react-native-layout/issues"
+  },
+  "homepage": "https://github.com/jerolimov/react-native-layout#readme",
+  "keywords": [
+    "react-native",
+    "react-component",
+    "android",
+    "ios",
+    "layout",
+    "layoutmanager",
+    "borderlayout",
+    "gridlayout"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^5.0.0-beta6",
+    "coveralls": "^2.11.4",
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.8"
+  }
+}

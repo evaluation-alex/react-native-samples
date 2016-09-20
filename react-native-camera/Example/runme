@@ -1,0 +1,30 @@
+DATE=$(date)
+PWD=$(pwd)
+MONGO_DB="mongodb://10.101.101.3:27017/native"
+PORT=8081
+SETTINGS="$PWD/settings.json"
+
+echo $DATE
+echo "Starting all processes owned by $PWD ..."
+
+# install react-native-cli if not there
+RN=$(which react-native)
+[ -z $RN ] && npm install react-native-cli -g
+
+# install node modules if not there
+[ ! -f ./node_modules ] && npm install
+
+# create a settings.json file at project root then use this to start meteor (meteor installed at $HOME/.meteor/)
+# MONGO_URL=$MONGO_DB $HOME/.meteor/meteor --production --settings $SETTINGS --port $PORT
+
+# build a bundle for production 'release' mode
+#react-native bundle --dev false --platform ios --entry-file ./index.ios.js --bundle-output ./ios/main.jsbundle &
+#react-native bundle --entry-file ./index.ios.js --platform ios --bundle-output ./ios/main.jsbundle
+#react-native bundle --entry-file ./index.android.js --platform android --bundle-output ./android/main.jsbundle
+
+# run and connect to emulator
+#react-native run-nadroid
+#react-native run-ios
+
+# start the developement node server
+react-native start

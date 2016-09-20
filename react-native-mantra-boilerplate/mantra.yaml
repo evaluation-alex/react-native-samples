@@ -1,0 +1,218 @@
+root: src
+panes:
+  - name: Module
+    structure:
+      - directory: actions
+        structure:
+          - file: index.js
+            template: actionIndex
+      - directory: components
+      - directory: containers
+      - directory: forms
+      - file: index.js
+        template: module
+  - name: Configs
+    structure:
+      - directory: client/configs
+      - directory: lib
+      - file: client/configs/context.js
+        template: context
+      - file: client/configs/app.js
+        template: appConfig
+      - file: client/index.js
+        template: client
+templates:
+  - name: appConfig
+    text: |
+
+      const remote = 'ws://localhost:3000/websocket';
+
+      export default {
+        remote
+      };
+
+  # Module action template
+  - name: actions
+    text: |
+      export default {
+        $1({ Meteor }, param1) {
+
+        }
+      };
+
+    placeholders:
+      - Action name
+    actions:
+      - type: replace
+        path: index.js
+        what: /* IMPORTS */
+        replace: import $name from './$name';\n/* IMPORTS */
+      - type: replace
+        path: index.js
+        what: /* CALLS */
+        replace: $name,\n  /* CALLS */
+      - type: create
+        path: tests/$name.js
+        text: |
+          const { describe, it } = global;
+          import { expect } from 'chai';
+          import { spy, stub } from 'sinon';
+          import actions from '../$name';
+
+          describe('MODULE_NAME.actions.$name', () => {
+            describe('ACTION_NAME', () => {
+              it('should reject if title is not there', () => {
+                const LocalState = {set: spy()};
+                actions.create({LocalState}, null, 'content');
+                const args = LocalState.set.args[0];
+                expect(args[0]).to.be.equal('SAVING_ERROR');
+                expect(args[1]).to.match(/required/);
+              });
+            });
+          });
+
+  - name: actionIndex
+    create: true
+    text: |
+      /* IMPORTS */
+      export default {
+        /* CALLS */
+      };
+
+  # Module component template
+  - name: components
+    text: |
+      import React, { Component } from 'react';
+      import { View, StyleSheet } from 'react-native';
+
+      export default class $1 extends Component {
+        render() {
+          return null;
+        }
+      }
+
+      const styles = StyleSheet.create({
+
+      });
+
+    placeholders:
+      - Component Name
+    actions:
+      - type: create
+        path: tests/$name.js
+        text: |
+          const { describe, it } = global;
+          import { expect } from 'chai';
+          import { shallow } from 'enzyme';
+          import Component from '../$name';
+
+          describe('MODULE_NAME.components.$name', () => {
+            it('should not be null', () => {
+              const el = shallow(<Component />);
+              expect(el).not.to.be.null;
+            });
+          });
+
+  # Module container template
+  - name: containers
+    text: |
+      import { useDeps, composeAll } from 'mantra-core';
+      import { composeWithTracker } from 'react-native-meteor';
+
+      import L from '../../core/components/loading';
+      import E from '../../core/components/error';
+
+      import Login from '../components/login';
+
+      export const composer = ({context}, onData) => {
+        const { Meteor } = context();
+
+        onData(null, {});
+      };
+
+      export const depsMapper = (context, actions) => ({
+        context: () => context
+      });
+
+      export default composeAll(
+        composeWithTracker(composer, L, E),
+        useDeps(depsMapper)
+      )(Login);
+
+
+    placeholders:
+      - Component Name
+    actions:
+      - type: replace
+        path: $name.js
+        what: _____name_____';
+        replace: $name';
+      - type: create
+        path: tests/$name.js
+        text: |
+          const { describe, it } = global;
+          import { expect } from 'chai';
+          import { spy, stub } from 'sinon';
+          import { composer, depsMapper } from '../$name';
+
+          describe('MODULE_NAME.containers.$name', () => {
+            describe('composer', () => {
+              it('should ', () => {
+
+              });
+            });
+          });
+
+  # Module index template
+  - name: module
+    show: true
+    create: true
+    text: |
+      import actions from './actions';
+
+      export default {
+        actions
+      };
+
+  # context template
+  - name: context
+    create: true
+    text: |
+      import Meteor, { Accounts } from 'react-native-meteor';
+
+      export default function () {
+        return {
+          Meteor,
+          Accounts
+        };
+      }
+
+  # client index template
+  - name: client
+    create: true
+    show: true
+    text: |
+      import './configs/config';
+      import {createApp} from 'mantra-core';
+      import coreModule from './modules/core/index';
+      import initContext from './configs/context';
+      // init context
+      const context = initContext();
+      // create app
+      const app = createApp(context);
+      app.loadModule(coreModule);
+      app.init();
+
+    actions:
+      - type: replace
+        path: ../index.js
+        what: import {createApp} from 'mantra-core';
+        replace: |
+          import {createApp} from 'mantra-core';
+          import $nameModule from './modules/$name';
+      - type: replace
+        path: ../index.js
+        what: app.init();
+        replace: |
+          app.loadModule($nameModule);
+          app.init()

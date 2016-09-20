@@ -1,0 +1,18 @@
+{
+  "name": "WLPN",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "lint": "standard --verbose | snazzy"
+  },
+  "dependencies": {
+    "react": "15.3.1",
+    "react-native": "0.32.1",
+    "react-native-video": "^0.9.0"
+  },
+  "devDependencies": {
+    "snazzy": "^4.0.1",
+    "standard": "*"
+  }
+}
